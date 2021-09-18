@@ -1,0 +1,126 @@
+#pragma once
+#include <iostream>
+using namespace std;
+
+template <typename T>
+class List
+{
+private:
+
+	template <typename T>
+	class Node
+	{
+	public:
+		T Data;
+		Node* pNext;
+
+		Node(T Data = T(), Node* pNext = nullptr)
+		{
+			this->Data = Data;
+			this->pNext = pNext;
+		}
+	};
+	Node<T>* Head;
+	int N_Size;
+
+public:
+	//~List(); 
+	
+	List();
+	void Push_back(T Data);
+	int Get_Size(){ return N_Size; }
+	T& operator[](const int index);
+	void Pop_Front();
+	void Clear_All();
+	~List();
+
+};
+
+//template<typename T>
+//List<T>::~List()
+//{
+//	Node<T> *current = this->Head;
+//	Node<T>* temp;
+//	while (current != nullptr)
+//	{
+//		temp = current->pNext;
+//		delete current[];
+//		current = temp;
+//	}
+//}
+
+template <typename T>
+List<T>::List()
+{
+	N_Size = 0;
+	Head = nullptr;
+}
+
+template <typename T>
+void List<T>::Push_back(T Data)
+{
+	if (Head == nullptr)
+	{
+		Head = new Node<T>(Data);
+	}
+	else
+	{
+		Node<T>* Current = this->Head; // Current saves the adress of first node,but why we use "this" here?
+		while (Current->pNext != nullptr)
+		{
+			Current = Current->pNext;
+		}
+		Current->pNext = new Node<T>(Data);
+	}
+	N_Size++;
+
+}
+
+template <typename T>
+T& List<T>::operator[](const int index)
+{
+	int counter = 0;
+	Node<T>* current = this->Head;
+	while (current != nullptr)
+	{
+		if (counter == index)
+		{
+			return current->Data;
+		}
+		current = current->pNext;
+		counter++;
+	}
+
+}
+
+template<typename T>
+void List<T>::Pop_Front()
+{
+	Node<T> temp = this->Head;
+	Head = temp->pNext;
+	delete temp;
+	N_Size--;
+
+}
+
+template<typename T>
+void List<T>::Clear_All()
+{
+	while (Size)
+	{
+		Pop_Front();
+	}
+}
+
+template<typename T>
+ List<T>::~List()
+{
+	 Clear_All();
+}
+
+
+
+
+
+
+
