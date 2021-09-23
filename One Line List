@@ -33,7 +33,10 @@ public:
 	void Pop_Front();
 	void Clear_All();
 	~List();
-
+	void Push_front(T Data);
+	void Pop_back();
+	void InsertAt(T Data,int index);
+	void RemoveAt(int index);
 };
 
 //template<typename T>
@@ -117,6 +120,65 @@ template<typename T>
 {
 	 Clear_All();
 }
+
+ template<typename T>
+ void List<T>::InsertAt(T Data,int index)
+ {
+
+	 if (index == 0)
+	 {
+		 Push_front(Data);
+	 }
+	 else
+	 {
+		 Node<T>* Previous = this->Head;
+
+         for (int i = 0; i < index - 1; i++)
+		 {
+			 Previous = Previous -> pNext
+		 }
+		 Node<T>* newNode = new Node<T>(Data, Previous->pNext);
+		 Previous->pNext = newNode;
+
+		 N_Size++;
+	 }
+ }
+
+ template<typename T>
+ void List<T>::RemoveAt(int index)
+ {
+	 if (index==0)
+	 {
+		 Pop_Front();
+	 }
+	 else
+	 {
+		 Node<T>* Previous = this->Head;
+		 for (int i = 0; i < index - 1; i++)
+		 {
+			 Previous = Previous->pNext;
+		 }
+		 Node<T>* toDelete = Previous->pNext;
+		 Previous - pNext = toDelete->pNext;
+		 delete toDelete;
+		 N_Size--;
+		 
+	 }
+ }
+
+ template<typename T>
+ void List<T>::Push_front(T Data)
+ {
+	 Head = new Node<T>(Data, Head);
+	 N_Size++;
+
+ }
+
+ template<typename T>
+ void List<T>::Pop_back()
+ {
+	 RemoveAt(this->N_Size - 1);
+ }
 
 
 
